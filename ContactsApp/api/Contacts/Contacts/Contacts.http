@@ -1,0 +1,14 @@
+@Contacts_HostAddress = https://localhost:7204
+
+GET {{Contacts_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{Contacts_HostAddress}}/weatherforecast
+
+###
+
+GET {{Contacts_HostAddress}}/api/contacts
+
+###
