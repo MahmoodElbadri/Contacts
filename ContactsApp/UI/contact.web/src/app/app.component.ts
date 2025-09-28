@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { IContact } from './models/icontact';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +10,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'contact.web';
+
+  
+  constructor(private httpClient: HttpClient) {
+    contacts$: this.getContacts();
+  }
+
+  getContacts():Observable<IContact[]> {
+   return this.httpClient.get<IContact[]>(`$environment.apiUrl`);
+  }
 }
