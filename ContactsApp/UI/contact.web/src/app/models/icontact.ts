@@ -3,5 +3,5 @@ export interface IContact {
     name: string;
     email: string;
     phone: string;
-    favourite: boolean;
+    isFavourite: boolean;
 }
