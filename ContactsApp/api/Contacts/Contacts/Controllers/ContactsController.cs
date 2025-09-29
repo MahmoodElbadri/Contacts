@@ -27,4 +27,17 @@ public class ContactsController (ContactsDbContext _dbContext, IMapper _mapper):
         var response = _mapper.Map<ContactResponse>(contact);
         return Ok(response);
     }
+
+    [HttpDelete("{id:int}")]
+    public ActionResult DeleteContact(int id)
+    {
+        var contact = _dbContext.Contacts.Find(id);
+        if(contact != null)
+        {
+            _dbContext.Contacts.Remove(contact);
+            _dbContext.SaveChanges();
+            return NoContent();
+        }
+        return NotFound();
+    }
 }

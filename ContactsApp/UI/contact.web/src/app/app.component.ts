@@ -28,10 +28,40 @@ export class AppComponent {
   }
 
   onSubmit(){
-    console.log('oh yeah', this.contactsForm.value);
+    let contactAddRequest = {
+      name: this.contactsForm.value.name,
+      phone: this.contactsForm.value.phone,
+      email: this.contactsForm.value.email,
+      favourite: this.contactsForm.value.favourite
+    };
+    this.httpClient.post(`${environment.apiUrl}`,
+      contactAddRequest,{headers:{'Content-Type':'application/json'}}).subscribe({
+      next:()=>{
+        console.log("Contact added successfully");
+        this.contacts$ = this.getContacts();
+        this.contactsForm.reset();
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
   }
 
   getContacts():Observable<IContact[]> {
    return this.httpClient.get<IContact[]>(`${environment.apiUrl}`);
+  }
+
+  deleteContact(id: number) {
+    this.httpClient.delete(`${environment.apiUrl}/${id}`)
+      .subscribe({
+        next:()=>{
+          console.log("Contact deleted successfully");
+          this.contacts$ = this.getContacts();
+          alert('Item Deleted')
+        },
+        error:(err)=>{
+          console.log('error deleting contact', err);
+        }
+      });
   }
 }
